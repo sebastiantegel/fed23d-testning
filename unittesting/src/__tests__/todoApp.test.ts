@@ -17,6 +17,18 @@ describe("Todo App", () => {
     expect(todos[0].id).toBeGreaterThan(0);
   });
 
+  test("it should not add a todo", () => {
+    // Assign
+    const todoText = "";
+    const todos: Todo[] = [];
+
+    // Act
+    addTodo(todoText, todos);
+
+    // Assert
+    expect(todos).toHaveLength(0);
+  });
+
   test("it should toggle", () => {
     // Assign
     const todo: Todo = new Todo("Testing");

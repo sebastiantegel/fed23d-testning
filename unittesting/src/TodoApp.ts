@@ -1,7 +1,11 @@
 import { Todo } from "./models/Todo";
 
 export const addTodo = (text: string, theList: Todo[]) => {
-  theList.push(new Todo(text));
+  if (text !== "") {
+    theList.push(new Todo(text));
+  } else {
+    console.log("Ingentings läggs till...");
+  }
 };
 
 export const toggleTodo = (todo: Todo) => {
