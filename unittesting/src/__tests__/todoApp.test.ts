@@ -1,11 +1,19 @@
 import { Todo } from "../models/Todo";
 import { addTodo, removeTodo, toggleTodo } from "../TodoApp";
+import * as htmlFunctions from "./../htmlFunctions";
 
 describe("Todo App", () => {
+  let mockedCreateHtml: jest.SpyInstance<void>;
+
+  beforeEach(() => {
+    mockedCreateHtml = jest.spyOn(htmlFunctions, "createHtml");
+  });
+
   test("it should add a todo", () => {
     // Assign
     const todoText = "Lär dig vue";
     const todos: Todo[] = [];
+    document.body.innerHTML = `<ul id="todoList"></ul>`;
 
     // Act
     addTodo(todoText, todos);
@@ -15,6 +23,10 @@ describe("Todo App", () => {
     expect(todos[0].text).toBe(todoText);
     expect(todos[0].done).toBeFalsy();
     expect(todos[0].id).toBeGreaterThan(0);
+
+    // const liTags = document.getElementsByTagName("li");
+    // expect(liTags).toHaveLength(1);
+    expect(mockedCreateHtml).toHaveBeenCalled();
   });
 
   test("it should not add a todo", () => {
@@ -27,6 +39,7 @@ describe("Todo App", () => {
 
     // Assert
     expect(todos).toHaveLength(0);
+    expect(mockedCreateHtml).toHaveBeenCalled();
   });
 
   test("it should toggle", () => {
@@ -56,5 +69,6 @@ describe("Todo App", () => {
 
     // Assert
     expect(todos).toHaveLength(0);
+    expect(mockedCreateHtml).toHaveBeenCalled();
   });
 });
